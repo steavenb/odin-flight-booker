@@ -1,0 +1,20 @@
+<h3>Booking Confirmation</h3>
+
+<p>Dear <%= @passenger.name %>,</p>
+
+<p>Your booking has been confirmed.</p>
+
+<p>Booking details:</p>
+
+<ul>
+    <li>Booking ID: <%= @booking.id %></li>
+    <li>Flight: <%= @booking.flight.departure_airport.airport_code %> - <%= @booking.flight.arrival_airport.airport_code %></li>
+    <li>Departure Time: <%= @booking.flight.start.strftime("%Y-%m-%d %H:%M") %></li>
+    <li>Duration: <%= @booking.flight.duration %> minutes</li>
+</ul>
+
+<p>Thank you for booking with us. We look forward to seeing you on your flight.</p>
+
+<p>Best regards,</p>
+
+<p>The Flight Booking Team</p>

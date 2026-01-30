@@ -1,0 +1,14 @@
+Your booking has been confirmed.
+
+Booking details:
+
+Booking ID: <%= @booking.id %>
+Flight: <%= @booking.flight.departure_airport.airport_code %> - <%= @booking.flight.arrival_airport.airport_code %>
+Departure Time: <%= @booking.flight.start.strftime("%Y-%m-%d %H:%M") %>
+Duration: <%= @booking.flight.duration %> minutes
+
+Thank you for booking with us. We look forward to seeing you on your flight.
+
+Best regards,
+
+The Flight Booking Team

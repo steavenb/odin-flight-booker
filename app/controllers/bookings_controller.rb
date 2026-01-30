@@ -10,6 +10,9 @@ class BookingsController < ApplicationController
   def create
     @booking = Booking.new(booking_params)
     if @booking.save
+      @booking.passengers.each do |passenger|
+        PassengerMailer.confirmation_email(passenger, @booking).deliver_later
+      end
       redirect_to booking_path(@booking), notice: "Booking created successfully"
     else
       @flight = Flight.find(params[:booking][:flight_id])
@@ -23,6 +26,10 @@ class BookingsController < ApplicationController
 
   def index
     @bookings = Booking.all
+    respond_to do |format|
+      format.html
+      format.json { render json: @bookings }
+    end
   end
 
   private

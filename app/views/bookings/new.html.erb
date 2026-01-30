@@ -6,23 +6,43 @@
 <p>Departure Time: <%= @flight.start.strftime("%Y-%m-%d %H:%M") %></p>
 <p>Duration: <%= @flight.duration %> minutes</p>
 
+<div data-controller="hello">
 <h2>Add passenger details</h2>
 <%= form_with model: @booking do |form| %>
+  <%= form.hidden_field :flight_id, value: @flight.id %>
+  <div data-hello-target="passengerList">
   <% @booking.passengers.each_with_index do |passenger, index| %>
-    <%= form.hidden_field :flight_id, value: @flight.id %>
     <%= form.fields_for :passengers, passenger do |passenger_form| %>
-      <div style="border: 1px solid #ddd; margin-bottom: 20px; border-radius: 5px;">
-        <h4>Passenger <%= index + 1 %></h4>
-        <div style="margin-bottom: 10px;">
-          <%= passenger_form.label :name %>
-          <%= passenger_form.text_field :name %>
+        <div style="border: 1px solid #ddd; margin-bottom: 20px; border-radius: 5px;" data-hello-target="passenger">
+          <button type="button" data-action="hello#removePassenger">Remove</button>
+          <h4>Passenger <%= index + 1 %></h4>
+          <div style="margin-bottom: 10px;">  
+            <%= passenger_form.label :name %>
+            <%= passenger_form.text_field :name %>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <%= passenger_form.label :email %>
+            <%= passenger_form.text_field :email %>
+          </div>
         </div>
-        <div style="margin-bottom: 10px;">
-          <%= passenger_form.label :email %>
-          <%= passenger_form.text_field :email %>
+      <template data-hello-target="passengerForm">
+        <div style="border: 1px solid #ddd; margin-bottom: 20px; border-radius: 5px;" data-hello-target="passenger">
+          <button type="button" data-action="hello#removePassenger">Remove</button>
+          <h4>Passenger <%= index + 1 %></h4>
+          <div style="margin-bottom: 10px;">
+            <%= passenger_form.label :name %>
+            <%= passenger_form.text_field :name %>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <%= passenger_form.label :email %>
+            <%= passenger_form.text_field :email %>
+          </div>
         </div>
-      </div>
+      </template>
     <% end %>
   <% end %>
+  </div>
+  <button type="button" data-action="hello#addPassenger">Add Passenger</button>
   <%= form.submit "Create Booking" %>
 <% end %>
+</div>
